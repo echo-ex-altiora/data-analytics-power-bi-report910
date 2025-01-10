@@ -57,4 +57,121 @@ Download the Customers.zip file and unzip it on your local machine. As each file
 - Delete any obviously unused columns
     - = Table.RemoveColumns(#"Filtered Rows1",{"Source.Name"})
 
+### Save 
+Also save the latest version of your Power BI .pbix file and upload it to the Github repository.
+
+## Milestone 3 :
+
+### Task 1 : Date Table
+
+- Make date table 
+    - Date = CALENDAR(DATE(2010,1,1), DATE(2023,12,31))
+    - Mark as Date table
+
+- add columns to your date table:
+    - Day of Week
+        - Day of Week = FORMAT('Date'[Date],"dddd")
+        - Day Of Week Number = WEEKDAY('Date'[Date], 2)
+    - Month Number (i.e. Jan = 1, Dec = 12 etc.)
+        - Month Number = MONTH('Date'[Date])
+    - Month Name
+        - Month Name = FORMAT('Date'[Date],"mmmm")
+    - Quarter
+        - Quarter = QUARTER('Date'[Date])
+    - Year
+        - Year = YEAR('Date'[Date])
+    
+    - Start of Year
+        - Start Of Year = STARTOFYEAR('Date'[Date])
+    - Start of Quarter
+        - Start Of Quarter = STARTOFQUARTER('Date'[Date])
+    - Start of Month
+        - Start Of Month = STARTOFMONTH('Date'[Date])
+    - Start of Week
+        - Start Of Week = 'Date'[Date] - WEEKDAY('Date'[Date],2) + 1
+    
+    - Week Number
+        - Week Number = WEEKNUM('Date'[Date])
+
+### Task 2 : Star Schema
+
+Create relationships between the tables to form a star schema
+
+- Products[Product Code] to Orders[Product Code]
+- Stores[Store code] to Orders[Store Code]
+- Customers[User UUID] to Orders[User ID]
+- Date[date] to Orders[Order Date]
+- Date[date] to Orders[Shipping Date]
+
+All relationships are one-to-many with a single filter direction flowing from the dimension table side to the fact table side 
+
+There are two reltionships between Orders and Date tables but Date[date] to Orders[Order Date] is the active relationship.
+
+### Task 3 : Measures Table
+
+Creating a measures table keeps the data model organized and easy to navigate.
+From the Model view, select Enter Data from the Home tab of the ribbon; name the new blank table Measures Table and then click Load
+
+### Task 4 : Key Measures
+
+1. Create a measure called Total Orders that counts the number of orders in the Orders table
+    - Total Orders = COUNT(Orders[Order Date])
+
+2. Create a measure called Total Revenue that multiplies the Orders[Product Quantity] column by the Products[Sale Price] column for each row, and then sums the result
+    - Total Revenue = SUMX(Orders, Orders[Product Quantity] * RELATED(Products[Sale Price]))
+
+3. Create a measure called Total Profit which performs the following calculation:
+    - For each row, subtract the Products[Cost Price] from the Products[Sale Price], and then multiply the result by the Orders[Product Quantity]
+    - Sums the result for all rows
+        - Total Profit = SUMX(Orders, (RELATED(Products[Sale Price]) - RELATED(Products[Cost Price])) * Orders[Product Quantity])
+
+4. Create a measure called Total Customers that counts the number of unique customers in the Orders table. This measure needs to change as the Orders table is filtered, so do not just count the rows of the Customers table!
+    - Total Customers = DISTINCTCOUNT(Orders[User ID])
+
+5. Create a measure called Total Quantity that counts the number of items sold in the Orders table
+    - Total Quantity = SUM(Orders[Product Quantity])
+
+6.Create a measure called Profit YTD that calculates the total profit for the current year
+    - Profit YTD = TOTALYTD([Total Profit], 'Date'[Date])
+
+7. Create a measure called Revenue YTD that calculates the total revenue for the current year
+    - Revenue YTD = TOTALYTD([Total Revenue], 'Date'[Date])
+
+### Task 5 : Date and Geography Hierarchies
+
+#### Date Hierarchies
+
+Date Hierarchy has the following levels
+    - Start of Year
+    - Start of Quarter
+    - Start of Month
+    - Start of Week
+    - Date
+
+#### Calculated column : Country
+
+Create a new calculated column in the Stores table called Country that creates a full country name for each row, based on the Stores[Country Code] column.
+    - Country = SWITCH([Country Code], "GB", "United Kingdom", "US", "United States", "DE", "Germany")
+
+#### Calculated column : Geography
+
+Create a new calculated column in the Stores table called Geography that creates a full geography name for each row, based on the Stores[Country Region], and Stores[Country] columns, separated by a comma and a space.
+    - Geography = Stores[Country Region] & ", " & Stores[Country]
+
+#### Geography : Data Types
+
+Change Data Categories in column tools for the Stores Table as below:
+    - Region : Continent
+    - Country : Country
+    - Country Region : State or Province
+
+#### Geography Hierarchies
+
+Geography hierarchy has the following levels
+    - World Region
+    - Country
+    - Country Region
+
+### Save
+
 Also save the latest version of your Power BI .pbix file and upload it to the Github repository.
