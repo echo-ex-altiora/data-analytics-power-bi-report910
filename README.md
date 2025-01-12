@@ -33,7 +33,7 @@ Method used to import was csv file
 - Rename the columns in your dataset to match Power BI naming conventions
     - = Table.RenameColumns(#"Removed Duplicates",{{"description", "Description"}, {"sale_price", "Sale Price"}, {"weight", "Weight"}, {"category", "Category"}, {"date_added", "Date Added"}, {"product_uuid", "Product UUID"}, {"availability", "Availability"}, {"product_code", "Product Code"}, {"cost_price", "Cost Price"}})
 
-### Products Table
+### Stores Table
 Method used to import was Azure Blob Storage
 When you initially import it, it will be a single row file. In Power Query Editor view you can click on the link under content to gain access to the csv file contained in the storage.
     - = Csv.Document(#"https://powerbistorage4776 blob core windows net/data-analytics/_Stores csv",[Delimiter=",", Columns=14, Encoding=65001, QuoteStyle=QuoteStyle.Csv])
@@ -175,3 +175,108 @@ Geography hierarchy has the following levels
 ### Save
 
 Also save the latest version of your Power BI .pbix file and upload it to the Github repository.
+
+## Milestone 4 : Report 
+
+### Create report Pages
+
+Create four report pages and name them as follows:
+
+    - Executive Summary
+    - Customer Detail
+    - Product Detail
+    - Stores Map
+
+Also choose colour scheme : Solar
+
+### Add navigation sidebar
+
+On the Executive Summary page, add a rectangle shape covering a narrow strip on the left side of the page. Set the fill colour to a contrasting colour of your choice. This will be the sidebar that we will use to navigate between pages later in our report build.
+
+Duplicate the rectangle shape on each of the other pages in your report
+
+## Milestone 5 : Customer detail
+
+Create a report page based on customer-level analysis.
+This will contain :
+    - Card Visuals for total distinct customers and revenue per customer
+    - A donut chart showing number of customers by country, and another showing number of customers by product category
+    - A line chart of weekly distinct customers
+    - A table showing the top 20 customers by total revenue, showing the revenue per customer and the total orders for each customer
+    - A set of three card visuals showing the name, number of orders, and revenue for the top customer by revenue
+    - a date slicer
+
+### Task 1 : Headline Card Visuals
+
+- Create two rectangles and arrange them in the top left corner of the page. These will serve as the backgrounds for the card visuals.
+- Add a card visual for the [Total Customers] measure we created earlier. Rename the field Unique Customers. 
+
+Ive not figured out how to do this yet....
+
+- Create a new measure in your Measures Table called [Revenue per Customer]. This should be the [Total Revenue] divided by the [Total Customers].
+    - Revenue per Customer = [Total Revenue] / [Total Customers]
+- Add a card visual for the [Revenue per Customer] measure 
+    - Go to Format > Properties > Format options > Format > Currency
+
+### Task 2 : Donut Charts
+
+- Add a Donut Chart visual showing the total customers for each country, using the Customers[Country] column to filter the [Total Customers] measure
+- Add a Donut Chart visual showing the number of customers who purchased each product category, using the Products[Category] column to filter the [Total Customers] measure
+
+Visual
+- Set background for both to transparent, legend set to off and details label set to Category
+
+### Task 3 : Line Chart
+
+- Add a Line Chart visual to the top of the page. It should show [Total Customers] on the Y axis, and use the Date Hierarchy we created previously for the X axis. Allow users to drill down to the month level, but not to weeks or individual dates.
+    - unclick week and date
+- Add a trend line, and a forecast for the next 10 periods with a 95% confidence interval
+- Also add a zoom slider for the x-axis
+
+I'm having problems with this task with making it drill down how I want
+Ill move forward with the next task and then come back...
+
+### Task 4 : Top 20 Customers Table
+
+- Create a new table, which displays the top 20 customers, filtered by revenue. The table should show each customer's full name, revenue, and number of orders.
+    - select the column customer[Full Name], measure [Total revenue] and measure [Total Orders]
+    - filter Full Name by Top 20 by [Total Revenue]
+    - Give table the title 'Top 20 customers'
+    - sort by total revenue descending
+- Add conditional formatting to the revenue column, to display data bars for the revenue values and background colour for total orders
+    - go to Format > Cell Element > Total revenue and set data bars to on.
+    - go to Format > Cell Element > Total orders and set background colour to on.
+
+There is a blank name row which I will take a look at later to see if its worth deleting
+
+### Task 5 : Top Customer Card
+
+- Create a set of three card visuals that provide insights into the top customer by revenue. They should display the top customer's name, the number of orders made by the customer, and the total revenue generated by the customer.
+
+For Name Card
+- Field is Full Name
+- Add Top N filter on full name Top 1 by value Total revenue
+Set background to transparent, add a shape behind, delete category label, add title 'Top customer by revenue'
+
+For Orders Card
+- Field is Total Orders
+- Add Top N filter on full name Top 1 by value Total revenue
+Set background to transparent, add a shape behind, delete category label, add title 'Orders'
+
+For Revenue Card
+- Field is Total Revenue
+- Add Top N filter on full name Top 1 by value Total revenue
+Set background to transparent, add a shape behind, delete category label, add title 'Revenue', and change data format to currency
+
+### Task 6 : Data Slicer
+
+Pick data slicer with Field: year and slicer style:.between 
+
+### Save
+
+Also save the latest version of your Power BI .pbix file and upload it to the Github repository.
+You should describe the visuals you created for this page, and add screenshots of how the visuals were set up, and a screenshot of the finished page.
+..... need to add pictures 
+
+## Milestone 5
+
