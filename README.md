@@ -498,3 +498,91 @@ Ive made it so the category data slicer doesnt interact with the area chart but 
 
 ### SAVE
 
+## Milestone 8 : Stores Map Page
+
+A page that can be used to easily see which stores are most profitable, as well as which are on track to reach their quarterly revenue and profit targets.
+
+### Task 1 : Map Visual
+
+On the Stores Map page, add a new map visual. 
+It should take up the majority of the page, just leaving a narrow band at the top of the page for a slicer. 
+Set the style to your satisfaction in the Format pane, and make sure Show Labels is set to On.
+
+Set the controls of your map as follows:
+    - Auto-Zoom: On
+    - Zoom buttons: Off
+    - Lasso button: Off
+
+Assign your Geography hierarchy to the Location field, and ProfitYTD to the Bubble size field
+
+format
+- set data format to currency and 2 decimal place for profit ytd
+- turn off title
+
+### Task 2 : Country Slicer
+
+Add a slicer above the map, set the slicer field to Stores[Country], and in the Format section set the slicer style as Tile and the Selection settings to Multi-select with Ctrl/Cmd and Show "Select All" as an option in the slicer.
+
+### Task 3 : Stores Drillthrough Page
+
+To make it easy for the region managers to check on the progress of a given store, we need to create a drillthrough page that summarises each store's performance. 
+This will include the following visuals:
+    - A table showing the top 5 products based on Total Orders, with columns: Description, Profit YTD, Total Orders, Total Revenue
+    - A column chart showing Total Orders by product category for the store
+    - Gauges for Profit YTD against a profit target of 20% year-on-year growth vs. the same period in the previous year. The target should use the Target field, not the Maximum Value field, as the target will change as we move through the year.
+    - A Card visual showing the currently selected store
+
+#### Stores Drillthrough Page
+
+Create a new page named Stores Drillthrough. Open the format pane and expand the Page information tab. Set the Page type to Drillthrough and set `Drill through when` to Used as category. Set `Drill through from` to country region.
+
+#### measure for visuals
+
+We are going to need some measures for the gauges as follows:
+    - Profit YTD and Revenue YTD: You should have already created this earlier in the project
+    - Profit Goal and Revenue Goal, which should be a 20% increase on the previous year's year-to-date profit or revenue at the current point in the year
+        - Revenue Goal = CALCULATE(TOTALYTD([Total Revenue], 'Date'[Date]) * 1.20, DATEADD('Date'[Date], -1, YEAR))
+
+##### top 5 products table
+
+format
+- change profit ytd and total revenue data format to currency and 2 dp
+
+I've currently got it based on Profit YTD not Total Orders
+
+##### column chart
+
+- X-axis : Product Catgory
+- Y - axis : Total orders
+
+format
+- delete x and y axis titles
+- change bar colours
+
+##### Gauges
+
+Value is Profit/Revenue YTD
+Target is Profit/Revenue Goal
+
+- change data fromat to currency
+- bold callout values
+- decrease font size for target, min and max to 10
+
+##### Card
+
+field is calculated column Geography to show region and country
+
+- rename field to Store location and downsize font of callout value
+- add border to visual
+
+### Task 4 : Stores Tooltip Page
+
+You want users to be able to see each store's year-to-date profit performance against the profit target just by hovering the mouse over a store on the map. To do this, create a custom tooltip page, and copy over the profit gauge visual, then set the tooltip of the visual to the tooltip page you have created.
+
+- Make new page and call is stores tooltip page
+- copy over profit gauge
+- copy over georgraphy card and rename to location
+- go back to stores map page and on the map visual, got to Fromat > Properties , turn on tooltips and set type to report page and page to stores tooltip page
+
+### SAVE
+
