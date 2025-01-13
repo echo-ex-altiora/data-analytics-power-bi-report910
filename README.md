@@ -211,8 +211,6 @@ This will contain :
 - Create two rectangles and arrange them in the top left corner of the page. These will serve as the backgrounds for the card visuals.
 - Add a card visual for the [Total Customers] measure we created earlier. Rename the field Unique Customers. 
 
-Ive not figured out how to do this yet....
-
 - Create a new measure in your Measures Table called [Revenue per Customer]. This should be the [Total Revenue] divided by the [Total Customers].
     - Revenue per Customer = [Total Revenue] / [Total Customers]
 - Add a card visual for the [Revenue per Customer] measure 
@@ -361,8 +359,16 @@ Formatting :
 ### Extra : Top 10 Products Table
 
 .........
-- Create a new table, which displays the top 20 products, filtered by orders. The table should show each products description, category, revenue, customers and number of orders.
-    - select the column Products[Description], Products[Category], measure [Total revenue], measure [Total Customers] and measure [Total Orders]
+- Create a new table, which displays the top 20 products, filtered by orders. 
+The table should show each 
+    - products description
+    - category 
+    - revenue
+    - customers
+    - and number of orders.
+
+Format
+- select the column Products[Description], Products[Category], measure [Total revenue], measure [Total Customers] and measure [Total Orders]
     - filter Descriptions by Top 10 by [Total Orders]
     - Rename Description column header to 'Top 10 Products'
 - Add conditional formatting to the revenue column, to display data bars for the revenue values
@@ -372,4 +378,123 @@ Formatting :
 
 ### Save
 
+## Milestone 7 : Product detail page
+
+This page provides an in-depth look at which products within the inventory are performing well, with the option to filter by product and region.
+
+The report will contain the following visuals:
+    - Gauge visuals to show how the selected categories revenue, profit and number of orders are performing against a quarterly target
+    - card visuals to show which filters are currently selected
+    - An area chart showing relative revenue performance of each category over time
+    - A table showing the top 10 products by revenue in the selected context
+    - A scatter graph of quantity ordered against profit per item for products in the current context.
+
+### Task 1 : Gauge Visuals
+
+Add a set of three gauges, showing the current-quarter performance of Orders, Revenue and Profit against a quarterly target. The CEO has told you that they are targeting 10% quarter-on-quarter growth in all three metrics.
+
+- In your measures table, define DAX measures:
+    -  current-quarter performance of Orders, Revenue and Profit
+        - QTD Orders = TOTALQTD([Total Orders], 'Date'[Date])
+        - QTD Profit = TOTALQTD([Total Profit], 'Date'[Date])
+        - QTD Revenue = TOTALQTD([Total Revenue], 'Date'[Date])
+    - quarterly targets for each metric
+        - Quarterly Target Orders = CALCULATE(TOTALQTD([Total Orders], 'Date'[Date]) * 1.05, DATEADD('Date'[Date], -1, QUARTER))
+        - Quarterly Target Profit = CALCULATE(TOTALQTD([Total Profit], 'Date'[Date]) * 1.05, DATEADD('Date'[Date], -1, QUARTER))
+        - Quarterly Target Revenue = CALCULATE(TOTALQTD([Total Revenue], 'Date'[Date]) * 1.05, DATEADD('Date'[Date], -1, QUARTER))
+    - gap between target and the performance measures (i.e. Current - Target).
+        -
+        -
+        -
+    While defining these measures, in the 'Properties' pane, select the Currency in relation to the relevant measures, and set the Currency Symbol as £.
+
+- Create three gauge filters, and assign the measures you have created. In each case, the maximum value of the gauge should be set to the target, so that the gauge shows as full when the target is met.
+
+- Apply conditional formatting to the callout value (the number in the middle of the gauge), so that it shows as red if the target is not yet met, and black otherwise. You will need to use the gap measures for this. You may use different colours if it first better with your colour scheme.
+
+- Arrange your gauges so that they are evenly spaced along the top of the report, but leave another similarly-sized space for the card visuals that will display which slicer states are currently selected
+
+Format
+- make values 10 point font
+- chnage titles and center and bold them
+- bold callout value and change colour
+- add pound signs to callout values for revenue and profit
+
+Task 2 : Filter Cards
+
+To the left of the gauges, we are going to put some placeholder shapes for the cards which will show the filter state. Using a colour in keeping with your theme, add two recatangle shapes, which together take up roughly the same space as one of the gauges.
+
+We will add values to these that will eventually reflect the filter state of the slicers. To do this, we need to define the following measures:
+    - Category Selection = IF(ISFILTERED(Products[Category]), SELECTEDVALUE(Products[Category], "No Selection"))
+    - Country Selection = IF(ISFILTERED(Stores[Country]), SELECTEDVALUE(Stores[Country],"No Selection"))
+
+Now add a card visual to each of the rectangles, and one of these measures to each of them. Format the card visuals so that they are the same size as the gauges, and the text is centered.
+- reduce text size to 18
+
+### Task 3 : Area Chart
+
+We now want to add an area chart that shows how the different product categories are performing in terms of revenue over time.
+
+Add a new area chart, and apply the following fields:
+    - X axis should be Dates[Start of Quarter]
+    - Y axis values should be Total Revenue
+    - Legend should be Products[Category]
+
+Format
+    - Remove axis titles
+    - data format for revenue as currency
+
+Arrange it on the left of the page, extending to level with the start of the second gauge visual.
+
+### Task 4 : Top Products Table
+
+Add a top 10 products table underneath the area chart. 
+The table should have the following fields:
+    - Product Description
+    - Category
+    - Total Revenue
+    - Total Customers
+    - Total Orders
+    - Profit per Order ????
+
+Format
+- filter Descriptions by Top 10 by [Total Orders]
+    - Rename Description column header to 'Top 10 Products'
+- Add conditional formatting to the revenue column, to display data bars for the revenue values
+    - go to Format > Cell Element > Total revenue and set data bars to on.
+- change total revenue to dispaly values as currency
+    - go to Format > Data Format > select Total Revenue > select Currency as Data Format and set decimal place to 2
+
+Task 5 : Scatter Graph
+
+The products team want to know which items to suggest to the marketing team for a promotional campaign. They want a visual that allows them to quickly see which product ranges are both top-selling items and also profitable.
+A scatter graph would be ideal for this job.
+
+Create a new calculated column called [Profit per Item] in your Products table, using a DAX formula to work out the profit per item
+    - Profit per Item = Products[Sale Price] - Products[Cost Price]
+
+Add a new Scatter chart to the page, and configure it as follows:
+    - Values should be Products[Description]
+    - X-Axis should be Products[Profit per Item]
+    - Y-Axis should be Orders[Total Quantity]
+    - Legend should be Products[Category]
+
+### Slicer
+
+- deleted slicer header and added a title instead for both which i bolded
+- decreased font of values from 12 to 10
+- made bachround transparent
+- change padding in values from 4px to 2px
+
+.......................... add stuff here
+
+### Additional cards
+
+I have also added to additional cards as shown in the example layout for most ordered product and highest revenue product.
+
+### Interactions
+
+Ive made it so the category data slicer doesnt interact with the area chart but that the country ne still does
+
+### SAVE
 
