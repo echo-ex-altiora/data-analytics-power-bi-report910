@@ -278,5 +278,98 @@ Also save the latest version of your Power BI .pbix file and upload it to the Gi
 You should describe the visuals you created for this page, and add screenshots of how the visuals were set up, and a screenshot of the finished page.
 ..... need to add pictures 
 
-## Milestone 5
+## Milestone 6
+
+Create a report page for the high level executive summary, to give an overview of the companies performance as a whole.
+The report will contain the following visuals:
+    - Card visuals showing Total revenue, Total Profits, Total Orders
+    - A graph of revenue against time
+    - Two donut charts showing orders and revenue by country
+    - A bar chart of orders by category
+    - KPI's for Quarterly revenue, customers and profits
+
+### Task 1 : Card Visuals
+
+- Copy a card visual from the Customer Detail page and paste it onto the Executive Summary page 3 times
+- Assign them to your Total Revenue, Total Orders and Total Profit measures
+- Use the Format > Callout Value pane to ensure no more than 2 decimal places in the case of the revenue and profit cards, and only 1 decimal place in the case of the Total Orders measure
+
+### Task 2 : Revenue Line Chart
+
+As with the card visuals, you can copy the line graph from your Customer Detail page, and change it as follows:
+- Set Y-axis to Total Revenue
+
+I also changed the title to "Revenue Trending" which I centered and removed the x and y axis titles.
+Changed gridlines and made sure the y axis values were in data format currency
+
+### Task 3 : Donut Charts
+
+Add a pair of donut charts, showing Total Revenue broken down by Store[Country] and Store[Store Type] respectively.
+
+I used Store[country code] so I adjusted the title for the chart. I also removed "Total" from the titles of both donut charts and bolded and centered them.
+
+
+### Task 4 : Bar Chart
+
+Add a bar chart showing number of orders by product category.
+
+Pick the clustered bar chart visual
+X-axis field : Total Orders
+Y-axis : Product[Category]
+
+Visual
+- Remove "Total" form title and centre and bold it
+- Remove titles form y and x axes
+- remove x axis values
+- Remove gridlines
+- Turn on data labels and set to one decimal place
+
+### Task 5 : KPI
+
+Create KPIs for Quarterly Revenue, Orders and Profit. To do so we will need to create a set of new measures for the quarterly targets. Create measures for the following:
+
+    - Previous Quarter Profit
+        - Previous Quarter Profit = CALCULATE([Total Profit], PREVIOUSQUARTER('Date'[Date]))
+    - Previous Quarter Revenue
+        - Previous Quarter Revenue = CALCULATE([Total Revenue], PREVIOUSQUARTER('Date'[Date]))
+    - Previous Quarter Orders
+        - Previous Quarter Orders = CALCULATE([Total Orders], PREVIOUSQUARTER('Date'[Date]))
+    - Targets, equal to 5% growth in each measure compared to the previous quarter
+        - Target Profit
+            - Target Profit = [Previous Quarter Profit] * 1.05
+        - Target Revenue
+            - Target Revenue = [Previous Quarter Revenue] * 1.05
+        - Target Orders
+            - Target Orders = [Previous Quarter Orders] * 1.05
+
+
+For each KPI:
+The Value field should be Total '      '
+The Trend Axis should be Start of Quarter
+The Target should be Target '     '
+
+I was having some trouble with this step as my dates table extended past the latest shipping date of 29 June 2023 to the end of 2023.
+........... insert picture of table .............
+So i change the date table to end at max shipping date
+    - Date = CALENDAR(DATE(2010,1,1), DATE(2023,06,30))
+
+Formatting :
+- Changed titles to Quarterly Revenue/Profit/Orders, then centered and bolded it
+- Decreseased font size of callout value from 45 to 38 and decimal place to 1
+- change target label to 'Previous Quarter' and change font size to 10
+
+### Extra : Top 10 Products Table
+
+.........
+- Create a new table, which displays the top 20 products, filtered by orders. The table should show each products description, category, revenue, customers and number of orders.
+    - select the column Products[Description], Products[Category], measure [Total revenue], measure [Total Customers] and measure [Total Orders]
+    - filter Descriptions by Top 10 by [Total Orders]
+    - Rename Description column header to 'Top 10 Products'
+- Add conditional formatting to the revenue column, to display data bars for the revenue values
+    - go to Format > Cell Element > Total revenue and set data bars to on.
+- change total revenue to dispaly values as currency
+    - go to Format > Data Format > select Total Revenue > select Currency as Data Format and set decimal place to 2
+
+### Save
+
 
