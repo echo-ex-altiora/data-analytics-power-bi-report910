@@ -1,0 +1,3 @@
+name,type,nullable,default,autoincrement,comment
+highest_revenue_month,TEXT,True,,False,
+total_revenue,INTEGER,True,,False,

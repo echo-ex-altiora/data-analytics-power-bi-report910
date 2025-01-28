@@ -1,0 +1,11 @@
+name,type,nullable,default,autoincrement,comment
+date_of_birth,TEXT,True,,False,
+company,TEXT,True,,False,
+email,TEXT,True,,False,
+address,TEXT,True,,False,
+country,TEXT,True,,False,
+country_code,TEXT,True,,False,
+telephone,TEXT,True,,False,
+join_date,TEXT,True,,False,
+customer_id,TEXT,False,,False,
+full_name,TEXT,True,,False,

@@ -1,0 +1,11 @@
+name,type,nullable,default,autoincrement,comment
+index,BIGINT,False,,False,
+customer_id,TEXT,True,,False,
+card_number,BIGINT,True,,False,
+store_code,TEXT,True,,False,
+product_code,TEXT,True,,False,
+product_quantity,BIGINT,True,,False,
+order_date,TEXT,True,,False,
+order_time,TEXT,True,,False,
+shipping_date,TEXT,True,,False,
+shipping_time,TEXT,True,,False,

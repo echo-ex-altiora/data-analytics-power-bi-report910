@@ -1,0 +1,11 @@
+name,type,nullable,default,autoincrement,comment
+date,TEXT,False,,False,
+day_of_week,VARCHAR(10),True,,False,
+month_number,BIGINT,True,,False,
+month_name,VARCHAR(20),True,,False,
+quarter,BIGINT,True,,False,
+year,BIGINT,True,,False,
+start_of_year,TEXT,True,,False,
+start_of_quarter,TEXT,True,,False,
+start_of_month,TEXT,True,,False,
+start_of_week,TEXT,True,,False,

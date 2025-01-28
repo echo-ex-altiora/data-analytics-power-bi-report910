@@ -1,0 +1,13 @@
+name,type,nullable,default,autoincrement,comment
+store_code,TEXT,False,,False,
+staff_numbers,BIGINT,True,,False,
+date_opened,TEXT,True,,False,
+store_type,TEXT,True,,False,
+country_code,TEXT,True,,False,
+region,TEXT,True,,False,
+country_region,TEXT,True,,False,
+latitude,DOUBLE PRECISION,True,,False,
+longitude,DOUBLE PRECISION,True,,False,
+country,TEXT,True,,False,
+geography,TEXT,True,,False,
+world_region,TEXT,True,,False,

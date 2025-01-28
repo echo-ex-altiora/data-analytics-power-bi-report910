@@ -1,0 +1,11 @@
+name,type,nullable,default,autoincrement,comment
+description,TEXT,True,,False,
+sale_price,DOUBLE PRECISION,True,,False,
+category,TEXT,True,,False,
+ean,DOUBLE PRECISION,True,,False,
+date_added,TEXT,True,,False,
+product_uuid,TEXT,True,,False,
+availability,TEXT,True,,False,
+product_code,TEXT,False,,False,
+weight,DOUBLE PRECISION,True,,False,
+cost_price,DOUBLE PRECISION,True,,False,
