@@ -3,16 +3,16 @@
 You have recently been approached by a medium-sized international retailer who is keen on elevating their business intelligence practices. With operations spanning across different regions, they've accumulated large amounts of sales from disparate sources over the years.
 
 ## Table of Contents
-1. [Introduction to Read Me](#introduction)
-1. [Import Data into Power BI](#section-1)
-1. [Creating the Data Model](#section-2)
-1. [Setting Up Report](#section-3)
-1. [Customer Detail Page](#section-4)
-1. [Executive Summary Page](#section-5)
-1. [Product Detail Page](#section-6)
-1. [Stores Map Page](#section-7)
-1. [Cross-filtering and Navigation](#section-8)
-1. [Create Metrics for Users Outside the Company Using SQL](#section-9)
+1. [Introduction to Read Me](#introduction-to-read-me)
+1. [Import Data into Power BI](#import-data-into-power-bi)
+1. [Creating the Data Model](#creating-the-data-model)
+1. [Setting Up Report](#setting-up-report)
+1. [Customer Detail Page](#customer-detail-page)
+1. [Executive Summary Page](#executive-summary-page)
+1. [Product Detail Page](#product-detail-page)
+1. [Stores Map Page](#stores-map-page)
+1. [Cross-filtering and Navigation](#cross-filtering-and-navigation)
+1. [Create Metrics for Users Outside the Company Using SQL](#create-metrics-for-users-outside-the-company-using-sql)
 
 ## Introduction to Read Me
 -------------------
